@@ -18,12 +18,26 @@ final class WhatIsTheNewsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func test_ModelNew() throws {
+            // with the first example
+        let new = New.examples[0]
+
+        XCTAssertNotNil(new)
+        XCTAssertEqual(new.title, "Les joueuses jamaïcaines veulent faire pression sur la fédération")
+        XCTAssertEqual(new.urlToImage, "https://sofoot.s3.eu-central-1.amazonaws.com/wp-content/uploads/2023/07/28111756/6171886-hd-1400x933.jpg")
+        XCTAssertEqual(new.description, "La qualif pour fermer les bouches. Lister les sélections qualifiées pour la Coupe du monde féminine qui ont subi de…")
+        XCTAssertEqual(new.url, "https://www.sofoot.com/breves/les-joueuses-jamaicaines-veulent-faire-pression-sur-la-federation")
+        XCTAssertEqual(new.author, "Arthur CHARLIER")
+        XCTAssertEqual(new.source.name, "SO FOOT")
+        XCTAssertEqual(new.publishedAt, "2023-07-28T09:18:16Z")
+    }
+
+    func testEqualBetweenNews() throws {
+        let news = New.examples
+
+        XCTAssertNotNil(news)
+        XCTAssertEqual(news.count,4)
+        XCTAssertNotEqual(news[0].url, news[1].url)
     }
 
     func testPerformanceExample() throws {

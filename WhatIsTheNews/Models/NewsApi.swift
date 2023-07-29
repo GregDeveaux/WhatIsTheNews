@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsApi {
+struct NewsApi: Codable {
     let totalResults: Int
     let news: [New]
 
@@ -15,4 +15,8 @@ struct NewsApi {
         case totatResults
         case news = "articles"
     }
+}
+
+struct Source: Codable {
+    let name: String
 }

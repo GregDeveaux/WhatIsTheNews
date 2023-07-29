@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct New {
+struct New: Codable {
     let title: String
     let urlToImage: String
     let description: String
@@ -15,10 +15,6 @@ struct New {
     let author: String?
     let source: Source
     let publishedAt: String
-}
-
-struct Source {
-    let name: String
 }
 
 extension New {
