@@ -2,7 +2,7 @@
 //  WhatIsTheNewsTests.swift
 //  WhatIsTheNewsTests
 //
-//  Created by Greg-Mini on 29/07/2023.
+//  Created by Greg Deveaux on 29/07/2023.
 //
 
 import XCTest

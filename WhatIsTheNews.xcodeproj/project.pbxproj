@@ -14,6 +14,7 @@
 		BCE6FAFF2A7506980070984A /* WhatIsTheNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE6FAFE2A7506980070984A /* WhatIsTheNewsTests.swift */; };
 		BCE6FB092A7506980070984A /* WhatIsTheNewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE6FB082A7506980070984A /* WhatIsTheNewsUITests.swift */; };
 		BCE6FB0B2A7506980070984A /* WhatIsTheNewsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE6FB0A2A7506980070984A /* WhatIsTheNewsUITestsLaunchTests.swift */; };
+		BCE6FB192A750B130070984A /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE6FB182A750B130070984A /* APIKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BCE6FB042A7506980070984A /* WhatIsTheNewsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatIsTheNewsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE6FB082A7506980070984A /* WhatIsTheNewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatIsTheNewsUITests.swift; sourceTree = "<group>"; };
 		BCE6FB0A2A7506980070984A /* WhatIsTheNewsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatIsTheNewsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BCE6FB182A750B130070984A /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				BCE6FAEC2A7506960070984A /* WhatIsTheNews */,
 				BCE6FAFD2A7506980070984A /* WhatIsTheNewsTests */,
 				BCE6FB072A7506980070984A /* WhatIsTheNewsUITests */,
+				BCE6FB172A750A220070984A /* Secrets */,
 				BCE6FAEB2A7506960070984A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +128,14 @@
 				BCE6FB0A2A7506980070984A /* WhatIsTheNewsUITestsLaunchTests.swift */,
 			);
 			path = WhatIsTheNewsUITests;
+			sourceTree = "<group>";
+		};
+		BCE6FB172A750A220070984A /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+				BCE6FB182A750B130070984A /* APIKeys.swift */,
+			);
+			path = Secrets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCE6FB192A750B130070984A /* APIKeys.swift in Sources */,
 				BCE6FAF02A7506960070984A /* ContentView.swift in Sources */,
 				BCE6FAEE2A7506960070984A /* WhatIsTheNewsApp.swift in Sources */,
 			);
