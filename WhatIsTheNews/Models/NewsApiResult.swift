@@ -1,5 +1,5 @@
 //
-//  NewsApi.swift
+//  NewsApiResult.swift
 //  WhatIsTheNews
 //
 //  Created by Greg Deveaux on 29/07/2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsApi: Codable {
+struct NewsApiResult: Codable {
     let totalResults: Int
     let news: [New]
 

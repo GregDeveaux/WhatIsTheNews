@@ -49,3 +49,7 @@ extension New {
              publishedAt: "2023-07-28T07:07:10Z"),
     ]
 }
+
+extension New: Identifiable {
+    var id: UUID { return UUID() }
+}
