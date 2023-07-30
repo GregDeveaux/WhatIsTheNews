@@ -23,7 +23,7 @@ class HomeViewModel: ObservableObject {
     }
 
 
-        // MARK: - get the different News from NewsApi
+        // MARK: - Get the different News from NewsApi
 
     func getNews(with keyWord: String) async throws {
 
@@ -65,7 +65,7 @@ class HomeViewModel: ObservableObject {
     }
 
 
-        // MARK: - create the url
+        // MARK: - Create the url
 
     func createUrl(to search: String) -> URL {
         var components = URLComponents()

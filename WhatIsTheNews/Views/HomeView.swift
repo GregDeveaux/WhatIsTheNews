@@ -18,7 +18,7 @@ struct HomeView: View {
         }
         .onAppear {
             Task {
-                try await viewModel.getNews(with: "france")
+                try await viewModel.getNews(with: "roi")
             }
         }
     }
