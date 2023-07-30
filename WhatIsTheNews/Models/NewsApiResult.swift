@@ -11,8 +11,8 @@ struct NewsApiResult: Codable {
     let totalResults: Int
     let news: [New]
 
-    enum codingkeys: String, CodingKey {
-        case totatResults
+    enum CodingKeys: String, CodingKey {
+        case totalResults
         case news = "articles"
     }
 }

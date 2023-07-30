@@ -45,8 +45,9 @@ class HomeViewModel: ObservableObject {
 
                         await saveTheNews(newsData)
                     }
-                    catch {
+                    catch let error as DecodingError {
                         print("🛑 HOME_VIEW_MODELS/GET_NEWS: Decoding error: \(String(describing: ApiError.invalidData.errorDescription))")
+                        describesInTheConsoleTheDecodingError(error)
                         throw ApiError.invalidData
                     }
                 case 400...451:
@@ -100,6 +101,25 @@ class HomeViewModel: ObservableObject {
                           source: result.source,
                           publishedAt: result.publishedAt)
             news.append(new)
+        }
+    }
+
+        //MARK: - DecodingError
+
+        /// Description: Describes in the console debug the decoding error
+        /// - Parameter error: error found when the problem with decode the json
+    func describesInTheConsoleTheDecodingError(_ error: DecodingError) {
+        switch error {
+            case .typeMismatch(let key, let value):
+                print("💢TYPE_MISMATCH: error \(key), value \(value) and ERROR: \(error.localizedDescription)")
+            case .valueNotFound(let key, let value):
+                print("❓VALUE_NOT_FOUND: error \(key), value \(value) and ERROR: \(error.localizedDescription)")
+            case .keyNotFound(let key, let value):
+                print("❓KEY_NOT_FOUND: error \(key), value \(value) and ERROR: \(error.localizedDescription)")
+            case .dataCorrupted(let key):
+                print("♨️ DATA_CORRUPTED: error \(key), and ERROR: \(error.localizedDescription)")
+            default:
+                print("ERROR: \(error.localizedDescription)")
         }
     }
 }
