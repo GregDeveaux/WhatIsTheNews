@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Logo_WhatIsTheNews_Alpha.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

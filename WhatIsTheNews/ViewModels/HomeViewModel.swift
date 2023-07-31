@@ -12,7 +12,9 @@ class HomeViewModel: ObservableObject {
         // MARK: - Property wrappers
 
     @Published var news: [New] = New.examples
+    @Published var newsSelection: [New] = New.examples
 
+    @Published var pageIndex: Int = 0
 
         // MARK: - Header Endpoint
 

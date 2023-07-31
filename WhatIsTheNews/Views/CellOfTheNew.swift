@@ -14,6 +14,7 @@ struct CellOfTheNew: View {
     var body: some View {
         HStack (alignment: .top) {
             Text(new.title)
+                .font(.headline)
 
             AsyncImage(url: URL(string: new.urlToImage)) { image in
                 image
@@ -27,8 +28,6 @@ struct CellOfTheNew: View {
             .frame(width: 100, height: 100)
             .clipShape(Rectangle())
         }
-        .padding()
-        .background(Color.red)
     }
 }
 
