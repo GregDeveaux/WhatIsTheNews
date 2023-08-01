@@ -14,4 +14,6 @@ extension Color {
 
     static let backgroundApp = Color("BackgroundApp")
     static let lightGreen = Color("LightGreen")
+    static let nightBlue = Color("NightBlue")
+    static let paperJournal = Color("PaperJournal")
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct New: Codable {
     let title: String
-    let urlToImage: String
+    let urlToImage: String?
     let description: String
     let url: String
     let author: String?
@@ -27,7 +27,7 @@ extension New {
              source: .init(name: "SO FOOT"),
              publishedAt: "2023-07-28T09:18:16Z"),
         New(title: "Angleterre - Danemark EN DIRECT",
-             urlToImage: "https://dnl.eurosport.com/sd/img/og/eurosport.jpg",
+             urlToImage: "https://dnl.eurosport.com/sd/img/orosport.jpg",
              description: "Eurosport est votre source privilégiée pour les dernières mises à jour des matches de Coupe du monde féminine. Obtenez le résumé complet du Angleterre - Danemark, avec les statistiques et les temps forts.",
              url: "https://www.eurosport.fr/football/coupe-du-monde-feminine/2023/live-angleterre-danemark_mtc1402991/live.shtml",
              author: nil,

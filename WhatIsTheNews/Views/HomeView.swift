@@ -8,68 +8,62 @@
 import SwiftUI
 
 struct HomeView: View {
+
+        // MARK: - Property wrappers
+
+    @Environment (\.colorScheme) var colorScheme
     @StateObject var viewModel = HomeViewModel()
 
     @State private var isMovingPageIsActivated = false
 
+
+        // MARK: - Body
+
     var body: some View {
-        ZStack {
-            Color.backgroundApp
-                .ignoresSafeArea()
+        GeometryReader { screen in
 
-            VStack {
-                CarouselOfNews()
-                    .environmentObject(viewModel)
+            let screenWidth = screen.size.width
 
-                Rectangle()
-                    .frame(width: 350, height: 1, alignment: .center)
+            NavigationStack {
+                ZStack {
+                    Color.backgroundApp
+                        .ignoresSafeArea()
 
-                Spacer()
-            }
-            .onAppear {
-                isMovingPageIsActivated = true
-                Task {
-                    await delayPageLogo()
+                    ScrollView {
+                        VStack {
+                            CarouselOfNews(width: screenWidth - 50, height: screenWidth - 50)
+                                .environmentObject(viewModel)
+                                .offset(y: -10)
+
+                            LineSeparatorNews()
+                                .padding(.bottom, 2)
+                                .padding([.leading, .trailing])
+                        }
+                        .onAppear {
+                            isMovingPageIsActivated = true
+                            Task {
+                                await viewModel.delayPageLogo(if: !isMovingPageIsActivated,
+                                                              delay: 5_000_000_000)
+                            }
+                        }
+
+                        ForEach($viewModel.news, id: \.id) { $new in
+                            NavigationLink {
+                                DetailOfTheNewView(new: new)
+                            } label: {
+                                CellOfTheNew(new: new)
+                            }
+                        }
+                    }
+                    .onAppear {
+                        Task {
+                            try await viewModel.getNews(with: "cinema")
+                        }
+                    }
                 }
             }
-
-
-//            NavigationStack {
-//                VStack {
-//
-//                    List($viewModel.news, id: \.id) { $new in
-//                        NavigationLink {
-//                            DetailOfTheNewView()
-//                        } label: {
-//                            CellOfTheNew(new: new)
-//                        }
-//                    }
-//                }
-//
-//
-//            }
-//            .onAppear {
-//                Task {
-//                    try await viewModel.getNews(with: "roi")
-//                }
-//        }
         }
     }
-
-
-
-    func delayPageLogo() async {
-        while isMovingPageIsActivated {
-            if viewModel.pageIndex <= viewModel.newsSelection.count - 1 {
-                try? await Task.sleep(nanoseconds: 3_000_000_000)
-                viewModel.pageIndex += 1
-            } else {
-                viewModel.pageIndex = 0
-                print("new pageIndex")
-            }
-        }
-    }
-
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -80,6 +74,10 @@ struct ContentView_Previews: PreviewProvider {
 
 struct CarouselOfNews: View {
     @EnvironmentObject var viewModel: HomeViewModel
+
+    var width: CGFloat
+    var height: CGFloat
+    
     var body: some View {
         TabView(selection: $viewModel.pageIndex) {
             Image("Logo_WhatIsTheNews_Alpha")
@@ -87,13 +85,13 @@ struct CarouselOfNews: View {
                 .scaledToFit()
                 .frame(width: 400, height: 400)
                 .tag(0)
-            PageOfTheNew(number: 0)
+            PageOfTheNew(number: 0, width: width, height: height)
                 .environmentObject(viewModel)
                 .tag(1)
-            PageOfTheNew(number: 2)
+            PageOfTheNew(number: 1, width: width, height: height)
                 .environmentObject(viewModel)
                 .tag(2)
-            PageOfTheNew(number: 3)
+            PageOfTheNew(number: 3, width: width, height: height)
                 .environmentObject(viewModel)
                 .tag(3)
         }
