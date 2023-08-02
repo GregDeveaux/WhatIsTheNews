@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var isMovingPageIsActivated = false
     @State private var isOpenedSheetToSearchKeyword = false
 
+
         // MARK: - Body
 
     var body: some View {
@@ -32,21 +33,25 @@ struct HomeView: View {
 
                     ScrollView {
                         VStack {
-                            CarouselOfNews(width: screenWidth - 50, height: screenWidth - 50)
+                            CarouselOfNews(width: screenWidth - 50,
+                                           height: screenWidth - 50)
                                 .environmentObject(viewModel)
                                 .offset(y: -10)
+                                .onAppear {
+                                    isMovingPageIsActivated = true
+                                    Task {
+                                        await viewModel.delayPageLogo(if: !isMovingPageIsActivated,
+                                                                      delay: 5_000_000_000)
+                                    }
+                                }
 
                             LineSeparatorNews()
                                 .padding(.bottom, 2)
                                 .padding([.leading, .trailing])
                         }
-                        .onAppear {
-                            isMovingPageIsActivated = true
-                            Task {
-                                await viewModel.delayPageLogo(if: !isMovingPageIsActivated,
-                                                              delay: 5_000_000_000)
-                            }
-                        }
+
+
+                            // MARK: - list of the news
 
                         ForEach($viewModel.news, id: \.id) { $new in
                             NavigationLink {
@@ -57,28 +62,36 @@ struct HomeView: View {
                         }
                     }
                     .onAppear {
+                        if viewModel.keyword.isEmpty {
+                            viewModel.keyword = "iPhone"
+                        }
                         Task {
-                            try await viewModel.getNews(with: "cinema")
+                            try await viewModel.getNews(with: viewModel.keyword)
+                            print("✅ HOME_VIEW/ON_SUBMIT: initial search is activated")
                         }
                     }
 
-                    Button {
-                        isOpenedSheetToSearchKeyword = true
-                    } label: {
-                        Circle()
-                            .foregroundColor(.lightGreen)
-                            .opacity(0.7)
-                            .overlay(alignment: .bottomTrailing) {
-                                Image(systemName: "sparkle.magnifyingglass")
-                                    .font(.system(size: 35))
-                                    .bold()
-                                    .foregroundColor(.white)
-                                    .offset(x: -23, y: -23)
-                            }
-                            .background(.ultraThinMaterial.opacity(0.9))
-                            .frame(width: 90)
-                            .clipShape(Circle())
-                            .position(x: screenWidth - 60, y: screenHeight - 28)
+                    VStack {
+                        Spacer()
+
+                        Button {
+                            isOpenedSheetToSearchKeyword = true
+                        } label: {
+                            Circle()
+                                .foregroundColor(.lightGreen)
+                                .opacity(0.7)
+                                .overlay(alignment: .bottomTrailing) {
+                                    Image(systemName: "sparkle.magnifyingglass")
+                                        .font(.system(size: 35))
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        .offset(x: -23, y: -23)
+                                }
+                                .background(.ultraThinMaterial.opacity(0.9))
+                                .clipShape(Circle())
+                        }
+                        .frame(width: 90)
+                        .offset(x: screenWidth * 0.33, y: screenHeight * 0.02)
                     }
                 }
             }

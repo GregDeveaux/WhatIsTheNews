@@ -23,7 +23,8 @@ final class MockResponseData {
         // recover bundle correct data for test
     static var newsApiCorrectData: Data {
         let bundle = Bundle(for: MockResponseData.self)
-        let urlExample = bundle.url(forResource: "ExamplesWithCoupeMondeFootFeminine", withExtension: ".json")
+        let urlExample = bundle.url(forResource: "ExamplesNewsApi", withExtension: ".json")
+        print("♻️: \(String(describing: urlExample))")
         let data = try! Data(contentsOf: urlExample!)
         return data
     }

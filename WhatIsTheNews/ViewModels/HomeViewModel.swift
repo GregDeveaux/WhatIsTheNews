@@ -33,6 +33,8 @@ class HomeViewModel: ObservableObject {
 
     func getNews(with keyWord: String) async throws {
 
+        news.removeAll()
+
         let url = createUrl(to: keyWord)
 
         var request = URLRequest(url: url)
