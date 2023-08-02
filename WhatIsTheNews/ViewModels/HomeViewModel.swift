@@ -16,6 +16,11 @@ class HomeViewModel: ObservableObject {
 
     @Published var pageIndex: Int = 0
 
+    @Published var keyword: String = ""
+        // limited to 9
+    @Published var categories: [String] = ["Sport", "Cinéma", "Apple", "Gastronomie", "Science", "Histoire", "Spectacle", "Nature", "Cosplay"]
+
+
         // MARK: - Header Endpoint
 
     var header: [String: String] {
@@ -23,7 +28,6 @@ class HomeViewModel: ObservableObject {
         let value = APIKeys.NewsApi.value.rawValue
         return [key: value]
     }
-
 
         // MARK: - Get the different News from NewsApi
 

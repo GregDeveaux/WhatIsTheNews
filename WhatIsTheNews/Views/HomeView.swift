@@ -15,7 +15,7 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
 
     @State private var isMovingPageIsActivated = false
-
+    @State private var isOpenedSheetToSearchKeyword = false
 
         // MARK: - Body
 
@@ -23,6 +23,7 @@ struct HomeView: View {
         GeometryReader { screen in
 
             let screenWidth = screen.size.width
+            let screenHeight = screen.size.height
 
             NavigationStack {
                 ZStack {
@@ -60,7 +61,30 @@ struct HomeView: View {
                             try await viewModel.getNews(with: "cinema")
                         }
                     }
+
+                    Button {
+                        isOpenedSheetToSearchKeyword = true
+                    } label: {
+                        Circle()
+                            .foregroundColor(.lightGreen)
+                            .opacity(0.7)
+                            .overlay(alignment: .bottomTrailing) {
+                                Image(systemName: "sparkle.magnifyingglass")
+                                    .font(.system(size: 35))
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .offset(x: -23, y: -23)
+                            }
+                            .background(.ultraThinMaterial.opacity(0.9))
+                            .frame(width: 90)
+                            .clipShape(Circle())
+                            .position(x: screenWidth - 60, y: screenHeight - 28)
+                    }
                 }
+            }
+            .sheet(isPresented: $isOpenedSheetToSearchKeyword) {
+                SearchView()
+                    .environmentObject(viewModel)
             }
         }
     }
