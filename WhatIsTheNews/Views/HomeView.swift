@@ -61,7 +61,7 @@ struct HomeView: View {
                     print("✅2️⃣ HOME_VIEW/ON_APPEAR: carousel selection is activated")
                     Task(priority: .high) {
                         print("✅3️⃣ HOME_VIEW/ON_APPEAR: call api for the carousel")
-                        try await viewModel.getNews(with: "climat")
+                        try await viewModel.getNews(with: "chanson")
                     }
 
                 }

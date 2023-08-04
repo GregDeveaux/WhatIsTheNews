@@ -41,6 +41,7 @@ struct DetailOfTheNewView: View {
                                 .fontDesign(.serif)
                                 .textCase(.uppercase)
                                 .foregroundColor(colorScheme == .light ? .nightBlue : .lightGreen)
+                                .padding(.trailing, 10)
 
                             Spacer()
 
@@ -84,7 +85,8 @@ struct DetailOfTheNewView: View {
                         }
 
                     }
-                    .padding([.trailing, .leading], 20)
+                    .padding(.leading, 20)
+                    .padding(.trailing, 35)
                 }
             }
         }

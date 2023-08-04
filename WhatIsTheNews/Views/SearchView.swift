@@ -62,6 +62,8 @@ struct SearchBar: View {
             Image(systemName: "sparkle.magnifyingglass")
                 .font(.system(size: 25))
                 .bold()
+                .foregroundColor(.nightBlue)
+
             TextField("Indique un mot clé", text: $viewModel.keyword)
                 .font(.system(size: 16).monospaced())
                 .foregroundColor(.nightBlue)
@@ -100,6 +102,7 @@ struct SearchCategories: View {
             VStack {
                 Text("–– ou choisi une catégorie ––")
                     .font(.system(size: 16).monospaced())
+                    .foregroundColor(.nightBlue)
                     .offset(y: 12)
 
                 LazyVGrid(columns: columns, spacing: 12) {
