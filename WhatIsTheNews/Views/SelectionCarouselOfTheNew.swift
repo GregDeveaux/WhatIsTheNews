@@ -1,5 +1,5 @@
 //
-//  PageOfTheNew.swift
+//  SelectionCarouselOfTheNew.swift
 //  WhatIsTheNews
 //
 //  Created by Greg Deveaux on 31/07/2023.
@@ -7,17 +7,16 @@
 
 import SwiftUI
 
-struct PageOfTheNew: View {
+struct SelectionCarouselOfTheNew: View {
 
         // MARK: - property wrappers
 
     @Environment (\.colorScheme) var colorScheme
 
-    @EnvironmentObject var viewModel: HomeViewModel
-
 
         // MARK: - property
 
+    var newsSelection: [New]
     var number: Int
     var width: CGFloat
     var height: CGFloat
@@ -26,7 +25,7 @@ struct PageOfTheNew: View {
         // MARK: - body
 
     var body: some View {
-        if let urlToImage = viewModel.newsSelection[number].urlToImage {
+        if let urlToImage = newsSelection[number].urlToImage {
                 // allows create a square image with dot effect
             AsyncImage(url: URL(string: urlToImage)) { phase in
                 if let image = phase.image {
@@ -68,7 +67,7 @@ struct PageOfTheNew: View {
             }
                 // title of the news
             .overlay(alignment: .bottom) {
-                Text(viewModel.newsSelection[number].title)
+                Text(newsSelection[number].title)
                     .padding(.bottom, 17)
                     .padding([.trailing, .leading], 5)
                     .font(.system(size: 23))
@@ -81,11 +80,12 @@ struct PageOfTheNew: View {
 }
 
 
-struct PageOfTheNew_Previews: PreviewProvider {
-    static var viewModel = HomeViewModel()
+    // MARK: - previews
+
+struct SelectionCarouselOfTheNew_Previews: PreviewProvider {
+    static var news = New.examples
 
     static var previews: some View {
-        PageOfTheNew(number: 0, width: 350, height: 350)
-            .environmentObject(viewModel)
+        SelectionCarouselOfTheNew(newsSelection: news, number: 0, width: 350, height: 350)
     }
 }

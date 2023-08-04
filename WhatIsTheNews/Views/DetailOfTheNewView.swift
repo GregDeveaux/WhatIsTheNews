@@ -29,24 +29,7 @@ struct DetailOfTheNewView: View {
                 VStack {
                     AsyncImageDetailNew(new: new, width: widthScreen, height: heightScreen)
                         .overlay(alignment: .topTrailing) {
-                            VStack {
-                                Text(new.source.name)
-                                    .bold()
-                                    .foregroundColor(.nightBlue)
-                                    .padding(.trailing, 30)
-                                    .padding(10)
-                                    .offset(x: 10)
-                                    .background {
-                                        Capsule()
-                                            .foregroundColor(.lightGreen)
-                                }
-                                    .offset(y: -60)
-                            }
-
-                            Image("Logo_WhatIsTheNews_Alpha")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .offset(y: 10)
+                            SourceName(sourceName: new.source.name)
                         }
                         .padding(.bottom, -165)
 
@@ -61,7 +44,7 @@ struct DetailOfTheNewView: View {
 
                             Spacer()
 
-                            Text(new.description)
+                            Text(new.description ?? "")
                                 .font(.callout)
 
                             HStack {
@@ -110,10 +93,10 @@ struct DetailOfTheNewView: View {
 
 struct DetailOfTheNewView_Previews: PreviewProvider {
 
-    static var viewModel = HomeViewModel()
+    static var news = New.examples
 
     static var previews: some View {
-        DetailOfTheNewView(new: viewModel.news[0])
+        DetailOfTheNewView(new: news[0])
     }
 }
 
@@ -129,7 +112,7 @@ struct AsyncImageDetailNew: View {
     var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                AsyncImageOfTheNew(stringUrl: new.urlToImage ?? "",
+                AsyncImageOfTheNew(new: new,
                                    width: width + 15,
                                    height: height / 1.5)
                 .ignoresSafeArea()
@@ -153,5 +136,30 @@ struct AsyncImageDetailNew: View {
         }
         .blendMode(colorScheme == .light ? .normal : .exclusion)
         .ignoresSafeArea()
+    }
+}
+
+struct SourceName: View {
+
+    var sourceName: String
+
+    var body: some View {
+        VStack {
+            Text(sourceName)
+                .bold()
+                .foregroundColor(.nightBlue)
+                .padding(.trailing, 30)
+                .padding(10)
+                .offset(x: 10)
+                .background {
+                    Capsule()
+                        .foregroundColor(.lightGreen)
+                }
+
+            Image("Logo_WhatIsTheNews_Alpha")
+                .resizable()
+                .frame(width: 80, height: 80)
+        }
+        .offset(y: -20)
     }
 }

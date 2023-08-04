@@ -16,6 +16,6 @@ struct SafariView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
-
+        // empty but used by the protocol
     }
 }

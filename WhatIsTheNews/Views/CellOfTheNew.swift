@@ -32,16 +32,9 @@ struct CellOfTheNew: View {
 
                 Spacer()
 
-                if let urlToImage = new.urlToImage {
-                    AsyncImageOfTheNew(stringUrl: urlToImage,
-                                  width: 100,
-                                  height: 100)
-                } else {
-                        // displays a subtitute image, if there isn't image
-                    Image("Logo_WhatIsTheNews-2")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                }
+                AsyncImageOfTheNew(new: new,
+                                   width: 100,
+                                   height: 100)
             }
 
             LineSeparatorNews()
@@ -51,6 +44,8 @@ struct CellOfTheNew: View {
     }
 }
 
+
+    // MARK: - previews
 
 struct CellOfTheNew_Previews: PreviewProvider {
     static let new = New.examples[2]

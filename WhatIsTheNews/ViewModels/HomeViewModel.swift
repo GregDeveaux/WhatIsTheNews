@@ -11,12 +11,16 @@ class HomeViewModel: ObservableObject {
 
         // MARK: - Property wrappers
 
-    @Published var news: [New] = New.examples
-    @Published var newsSelection: [New] = New.examples
+    @Published var news: [New] = []
 
-    @Published var pageIndex: Int = 0
+    @Published var newsSelectionCarousel: [New] = []
+    @Published var thisIsForSelectionCarousel: Bool = false
+    @Published var carouselIsCompleted: Bool = false
+
+    @Published var indexOfThedisplayOfTheNewsSelection: Int = 0
 
     @Published var keyword: String = ""
+
         // limited to 9
     @Published var categories: [String] = ["Sport", "Cinéma", "Apple", "Gastronomie", "Science", "Histoire", "Spectacle", "Nature", "Cosplay"]
 
@@ -29,15 +33,15 @@ class HomeViewModel: ObservableObject {
         return [key: value]
     }
 
+
         // MARK: - Get the different News from NewsApi
 
     func getNews(with keyWord: String) async throws {
 
-        news.removeAll()
-
         let url = createUrl(to: keyWord)
 
         var request = URLRequest(url: url)
+            // allows to include the apiKeys in the header
         request.allHTTPHeaderFields = header
 
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -52,6 +56,9 @@ class HomeViewModel: ObservableObject {
                         let newsData = try decoder.decode(NewsApiResult.self, from: data)
 
                         await saveTheNews(newsData)
+
+                        thisIsForSelectionCarousel = false
+                        print("✅4️⃣ HOME_VIEW/GET_NEWS: carousel selection is desactivated")
                     }
                     catch let error as DecodingError {
                         print("🛑 HOME_VIEW_MODELS/GET_NEWS: Decoding error: \(String(describing: ApiError.invalidData.errorDescription))")
@@ -100,6 +107,11 @@ class HomeViewModel: ObservableObject {
 
     @MainActor
     func saveTheNews(_ results: NewsApiResult) {
+
+            // delete the old values
+        news.removeAll()
+
+                    // then save each decoding result
         for result in results.news {
             let new = New(title: result.title,
                           urlToImage: result.urlToImage,
@@ -108,10 +120,21 @@ class HomeViewModel: ObservableObject {
                           author: result.author,
                           source: result.source,
                           publishedAt: result.publishedAt)
-            news.append(new)
+
+            if thisIsForSelectionCarousel {
+                newsSelectionCarousel.append(new)
+
+                carouselIsCompleted = true
+                print("✅ HOME_VIEW_MODELS/SAVE_THE_NEWS: the Carousel is completed : \(newsSelectionCarousel.count)")
+
+            } else {
+                news.append(new)
+                print("✅ HOME_VIEW_MODELS/SAVE_THE_NEWS: the news is completed : \(news.count)")
+            }
         }
     }
 
+    
         //MARK: - DecodingError
 
         /// Description: Describes in the console debug the decoding error
@@ -134,17 +157,21 @@ class HomeViewModel: ObservableObject {
         //MARK: - display carousel logo/news animated
 
         /// Description: Allows to animate the carousel of the news
-        /// - Parameter activator: indicate if the moving page is activate
+        /// - Parameter activated: indicate if the moving page is activate
         /// - Parameter delay: between the display screen
-    func delayPageLogo(if activator: Bool, delay: UInt64) async {
-        while activator {
-            if pageIndex <= newsSelection.count - 1 {
+    func delayPageLogo(if activated: Bool, delay: UInt64) async {
+        var round = 0
+        while activated && round <= 32 {
+            if indexOfThedisplayOfTheNewsSelection <= newsSelectionCarousel.count - 1 {
                 try? await Task.sleep(nanoseconds: delay)
-                pageIndex += 1
+                indexOfThedisplayOfTheNewsSelection += 1
+                print("new pageIndex: \(indexOfThedisplayOfTheNewsSelection)")
+
             } else {
-                pageIndex = 0
-                print("new pageIndex")
+                indexOfThedisplayOfTheNewsSelection = 0
+                print("new pageIndex: \(indexOfThedisplayOfTheNewsSelection)")
             }
+            round += 1
         }
     }
 }

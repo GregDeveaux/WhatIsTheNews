@@ -10,6 +10,8 @@ import XCTest
 
 final class WhatIsTheNewsTests: XCTestCase {
 
+    var viewModel: HomeViewModel!
+
     func test_ModelNew() throws {
             // with the first example
         let new = New.examples[0]
@@ -30,6 +32,23 @@ final class WhatIsTheNewsTests: XCTestCase {
         XCTAssertNotNil(news)
         XCTAssertEqual(news.count,4)
         XCTAssertNotEqual(news[0].url, news[1].url)
+    }
+
+    func testDelayPageLogo() async throws {
+            // Given
+        viewModel = HomeViewModel()
+        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheNewsSelection, 0)
+
+        viewModel?.newsSelectionCarousel = New.examples
+        XCTAssertEqual(viewModel?.newsSelectionCarousel.count, 4)
+
+        var isMovingPageSelectionIsActivated: Bool = true
+
+            // When
+        await viewModel?.delayPageLogo(if: isMovingPageSelectionIsActivated, delay: 51_000_000)
+
+            // Then
+        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheNewsSelection, 3)
     }
 
     func testPerformanceExample() throws {

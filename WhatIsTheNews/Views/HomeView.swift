@@ -12,10 +12,12 @@ struct HomeView: View {
         // MARK: - Property wrappers
 
     @Environment (\.colorScheme) var colorScheme
+
     @StateObject var viewModel = HomeViewModel()
 
     @State private var isMovingPageIsActivated = false
     @State private var isOpenedSheetToSearchKeyword = false
+    @State private var isFirstActivation: Bool = false
 
 
         // MARK: - Body
@@ -24,7 +26,6 @@ struct HomeView: View {
         GeometryReader { screen in
 
             let screenWidth = screen.size.width
-            let screenHeight = screen.size.height
 
             NavigationStack {
                 ZStack {
@@ -33,65 +34,43 @@ struct HomeView: View {
 
                     ScrollView {
                         VStack {
-                            CarouselOfNews(width: screenWidth - 50,
+                            CarouselOfNews(isMovingPageSelectionIsActivated: $isMovingPageIsActivated,
+                                           width: screenWidth - 50,
                                            height: screenWidth - 50)
                                 .environmentObject(viewModel)
-                                .offset(y: -10)
-                                .onAppear {
-                                    isMovingPageIsActivated = true
-                                    Task {
-                                        await viewModel.delayPageLogo(if: !isMovingPageIsActivated,
-                                                                      delay: 5_000_000_000)
-                                    }
-                                }
+
 
                             LineSeparatorNews()
                                 .padding(.bottom, 2)
                                 .padding([.leading, .trailing])
                         }
 
-
-                            // MARK: - list of the news
-
-                        ForEach($viewModel.news, id: \.id) { $new in
-                            NavigationLink {
-                                DetailOfTheNewView(new: new)
-                            } label: {
-                                CellOfTheNew(new: new)
-                            }
-                        }
-                    }
-                    .onAppear {
-                        if viewModel.keyword.isEmpty {
-                            viewModel.keyword = "iPhone"
-                        }
-                        Task {
-                            try await viewModel.getNews(with: viewModel.keyword)
-                            print("✅ HOME_VIEW/ON_SUBMIT: initial search is activated")
-                        }
+                        ListOfTheNews()
+                            .environmentObject(viewModel)
                     }
 
-                    VStack {
-                        Spacer()
+                    SearchButton(isOpenedSheetToSearchKeyword: $isOpenedSheetToSearchKeyword)
+                }
+            }
+            .onAppear {
+                isFirstActivation = true
+                print("✅1️⃣ HOME_VIEW/ON_APPEAR: first activation of the app, run carousel")
 
-                        Button {
-                            isOpenedSheetToSearchKeyword = true
-                        } label: {
-                            Circle()
-                                .foregroundColor(.lightGreen)
-                                .opacity(0.7)
-                                .overlay(alignment: .bottomTrailing) {
-                                    Image(systemName: "sparkle.magnifyingglass")
-                                        .font(.system(size: 35))
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .offset(x: -23, y: -23)
-                                }
-                                .background(.ultraThinMaterial.opacity(0.9))
-                                .clipShape(Circle())
-                        }
-                        .frame(width: 90)
-                        .offset(x: screenWidth * 0.33, y: screenHeight * 0.02)
+                if isFirstActivation {
+                    viewModel.thisIsForSelectionCarousel = true
+                    print("✅2️⃣ HOME_VIEW/ON_APPEAR: carousel selection is activated")
+                    Task(priority: .high) {
+                        print("✅3️⃣ HOME_VIEW/ON_APPEAR: call api for the carousel")
+                        try await viewModel.getNews(with: "climat")
+                    }
+
+                }
+
+                if viewModel.keyword.isEmpty {
+                    viewModel.keyword = "iPhone"
+                    Task(priority: .low) {
+                        try await viewModel.getNews(with: viewModel.keyword)
+                        print("✅5️⃣ HOME_VIEW/ON_APPEAR: initial search is activated")
                     }
                 }
             }
@@ -109,33 +88,58 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
+    //MARK: - Views
+
 struct CarouselOfNews: View {
+
     @EnvironmentObject var viewModel: HomeViewModel
+
+    @Binding var isMovingPageSelectionIsActivated: Bool
 
     var width: CGFloat
     var height: CGFloat
     
     var body: some View {
-        TabView(selection: $viewModel.pageIndex) {
+        TabView(selection: $viewModel.indexOfThedisplayOfTheNewsSelection) {
             Image("Logo_WhatIsTheNews_Alpha")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 400, height: 400)
                 .tag(0)
-            PageOfTheNew(number: 0, width: width, height: height)
-                .environmentObject(viewModel)
-                .tag(1)
-            PageOfTheNew(number: 1, width: width, height: height)
-                .environmentObject(viewModel)
-                .tag(2)
-            PageOfTheNew(number: 3, width: width, height: height)
-                .environmentObject(viewModel)
-                .tag(3)
+
+            if viewModel.newsSelectionCarousel.count > 3 {
+                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
+                             number: 0,
+                             width: width,
+                             height: height)
+                    .environmentObject(viewModel)
+                    .tag(1)
+                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
+                             number: 1,
+                             width: width,
+                             height: height)
+                    .environmentObject(viewModel)
+                    .tag(2)
+                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
+                             number: 2,
+                             width: width,
+                             height: height)
+                    .environmentObject(viewModel)
+                    .tag(3)
+            }
         }
         .tabViewStyle(.page)
         .frame(height: 450)
+        .offset(y: -10)
         .onAppear {
             colorDotTabView()
+
+            isMovingPageSelectionIsActivated = true
+            Task {
+                await viewModel.delayPageLogo(if: !isMovingPageSelectionIsActivated,
+                                              delay: 5_000_000_000)
+            }
         }
     }
 
@@ -143,5 +147,24 @@ struct CarouselOfNews: View {
     func colorDotTabView() {
         UIPageControl.appearance().currentPageIndicatorTintColor = .green
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.2)
+    }
+}
+
+
+
+struct ListOfTheNews: View {
+
+    @EnvironmentObject var viewModel: HomeViewModel
+
+    var body: some View {
+        VStack {
+            ForEach($viewModel.news, id: \.id) { $new in
+                NavigationLink {
+                    DetailOfTheNewView(new: new)
+                } label: {
+                    CellOfTheNew(new: new)
+                }
+            }
+        }
     }
 }

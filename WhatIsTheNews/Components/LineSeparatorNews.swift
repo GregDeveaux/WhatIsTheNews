@@ -2,14 +2,19 @@
 //  LineSeparatorNews.swift
 //  WhatIsTheNews
 //
-//  Created by Greg-Mini on 01/08/2023.
+//  Created by Greg Deveaux on 01/08/2023.
 //
 
 import SwiftUI
 
 struct LineSeparatorNews: View {
 
+        // MARK: - property wrappers
+
     @Environment (\.colorScheme) var colorScheme
+
+
+        // MARK: - body
 
     var body: some View {
         VStack (alignment: .leading) {
@@ -24,6 +29,9 @@ struct LineSeparatorNews: View {
         }
     }
 }
+
+
+    // MARK: - previews
 
 struct LineSeparatorNews_Previews: PreviewProvider {
     static var previews: some View {

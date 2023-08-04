@@ -9,8 +9,6 @@ import SwiftUI
 
 struct SearchView: View {
 
-//    @Environment(\.dismiss) var dismiss
-
     @EnvironmentObject var viewModel: HomeViewModel
 
     var body: some View {
@@ -68,7 +66,7 @@ struct SearchBar: View {
                 .font(.system(size: 16).monospaced())
                 .foregroundColor(.nightBlue)
                 .frame(height: 50)
-                /// allows to create a keyboard button search
+                /// allows to create a button search in the keyboard
                 .submitLabel(.search)
                 /// allows to block the submit if there isn't a keyboard
                 .submitScope(viewModel.keyword == "")

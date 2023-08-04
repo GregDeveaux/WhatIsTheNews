@@ -65,6 +65,14 @@ final class NewsApiTests: XCTestCase {
 
             // Then
             XCTAssertNotNil(viewModel?.news)
+            XCTAssertEqual(new?.title, "Les joueuses jamaïcaines veulent faire pression sur la fédération")
+            XCTAssertEqual(new?.urlToImage, "https://sofoot.s3.eu-central-1.amazonaws.com/wp-content/uploads/2023/07/28111756/6171886-hd-1400x933.jpg")
+            XCTAssertEqual(new?.author, "Arthur CHARLIER")
+            XCTAssertEqual(new?.description, "La qualif pour fermer les bouches. Lister les sélections qualifiées pour la Coupe du monde féminine qui ont subi de…")
+            XCTAssertEqual(new?.url, "https://www.sofoot.com/breves/les-joueuses-jamaicaines-veulent-faire-pression-sur-la-federation")
+            XCTAssertEqual(new?.publishedAt, "2023-07-28T09:18:16Z")
+            XCTAssertEqual(new?.source.name, "SO FOOT")
+
         } catch {
             XCTFail("🛑 There is an error in the test_NewsResearchWithGoodDataAndResponseOK: \(error)")
         }
