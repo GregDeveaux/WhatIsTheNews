@@ -74,6 +74,7 @@ papier journal, comme on peut le voir ci-dessous.
 <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" width="30">
 <img src="https://github.com/GregDeveaux/GregDeveaux/blob/main/documents/WhatIsTheNews-6.png" width="260" height="550">
 </p>
+<br/>
 
 ## Bug et Axe d'amélioration
 - BUG: Le carousselle devait fonctionner seul et afficher une nouvelle page toute les 5 secondes mais provoque un crash.
