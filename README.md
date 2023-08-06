@@ -79,7 +79,7 @@ papier journal, comme on peut le voir ci-dessous.
 ## Bug et Axe d'amélioration
 - BUG: Le carousselle devait fonctionner seul et afficher une nouvelle page toute les 5 secondes mais provoque un crash.
 - BUG: Les images se réactualisent toutes (caroussel et liste) lors du changement de page du caroussel.
-- UPDATE: Ne pas charger l'ensemble des articles d'un thème (env. 550), en utilisant "pageSize" de l'API.
+- UPDATE: Ne pas charger l'ensemble des articles d'un thème (env. 550 ou plus), en utilisant peut-être "pageSize" de l'API.
 - UPDATE: Pouvoir changer les différents thèmes pour en faire des raccourcis personnalisables.
 - UPDATE: Pour le carouselle, permettre repérer les thèmes favoris de l'utilisateur et faire un random des actus.
 - UPDATE: Ajouter de l'animation sur certains éléments.
