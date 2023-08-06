@@ -6,10 +6,14 @@ elle permet de récupérer l'ensemble des articles, selon un thème précis ou u
 de lire l'article sur le site du créateur de ce contenu tout en restant dans l'application elle-même.
 
 ## fonctionnement 
-à l'ouverture de 𝙒𝙃𝘼𝙏 𝙄𝙎 𝙏𝙃𝙀 𝙉𝙀𝙒𝙎, l'application affiche 2 types d'actualités différentes :
+À l'ouverture de 𝙒𝙃𝘼𝙏 𝙄𝙎 𝙏𝙃𝙀 𝙉𝙀𝙒𝙎, l'application affiche 2 types d'actualités différentes :
 <br /> 
 - une première dans la partie logo  </br>qui est un <b>carousselle présentant  </br>3 news</b> d'un thème déjà défini  </br>qui est la musique 🎸  </br>(non modifiable pour l'instant)
 - une seconde dans la <b>liste  </br>présentant dans un premier  </br>temps les news Apple</b>, </br> qui peut-être modifiée grâce </br> au <b>bouton loupe 🔍</b> <br />qui se trouve en bas à droite.
+<br/>
+<br/>
+<br/>
+<br/>
 <br/>
 <br/>
 <p>
