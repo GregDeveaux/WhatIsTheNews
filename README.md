@@ -8,6 +8,22 @@ tout en restant dans l'application elle-même.
 <br/>
 <br/>
 
+## ⚠️ Important ⚠️
+Avant d'exécuter l'appli sur Xcode pour la tester, il est nécessaire de mettre votre propre clé api pour [newsapi.org](https://newsapi.org)<br/>
+Créer un fichier nommé : <b>APIKeys.swift</b> <br/>
+dans lequel vous devez mettre ce petit bout de code en y incluant votre clé Api :<br/>
+
+    import Foundation
+
+    enum APIKeys {
+      enum NewsApi: String {
+              // Allows to use the apiKey in the Authorization HTTP header
+          case key = "Authorization"
+              // Indiquer votre code ici 👇 entre les guillemets
+          case value = "****************************************"    
+      }
+    }
+
 ## Fonctionnement 
 À l'ouverture de 𝙒𝙃𝘼𝙏 𝙄𝙎 𝙏𝙃𝙀 𝙉𝙀𝙒𝙎, l'application affiche 2 types d'actualités différentes :
 <br /> 
