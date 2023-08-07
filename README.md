@@ -99,3 +99,5 @@ papier journal, comme on peut le voir ci-dessous.
 - UPDATE: Pouvoir changer les différents thèmes pour en faire des raccourcis personnalisables.
 - UPDATE: Pour le carouselle, permettre repérer les thèmes favoris de l'utilisateur et faire un random des actus.
 - UPDATE: Ajouter de l'animation sur certains éléments.
+<br/>
+<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FGregDeveaux%2FWhatIsTheNews%2Ftree%2Fmain&count_bg=%233DFFAB&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
