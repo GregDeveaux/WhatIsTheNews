@@ -142,6 +142,7 @@ struct AsyncImageDetailNew: View {
 }
 
 struct SourceName: View {
+    @Environment (\.dismiss) var dismiss
 
     var sourceName: String
 
@@ -163,5 +164,20 @@ struct SourceName: View {
                 .frame(width: 80, height: 80)
         }
         .offset(y: -20)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "arrow.uturn.left.circle.fill")
+                        Text("Retour")
+                            .bold()
+                    }
+                    .foregroundColor(.lightGreen)
+                }
+            }
+        }
     }
 }
