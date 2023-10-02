@@ -17,7 +17,7 @@ struct SelectionCarouselOfTheNew: View {
         // MARK: - property
 
     var newsSelection: [New]
-    var number: Int
+    var index: Int
     var width: CGFloat
     var height: CGFloat
 
@@ -25,7 +25,7 @@ struct SelectionCarouselOfTheNew: View {
         // MARK: - body
 
     var body: some View {
-        if let urlToImage = newsSelection[number].urlToImage {
+        if let urlToImage = newsSelection[index].urlToImage {
                 // allows create a square image with dot effect
             AsyncImage(url: URL(string: urlToImage)) { phase in
                 if let image = phase.image {
@@ -67,7 +67,7 @@ struct SelectionCarouselOfTheNew: View {
             }
                 // title of the news
             .overlay(alignment: .bottom) {
-                Text(newsSelection[number].title)
+                Text(newsSelection[index].title)
                     .padding(.bottom, 17)
                     .padding([.trailing, .leading], 5)
                     .font(.system(size: 23))
@@ -86,6 +86,6 @@ struct SelectionCarouselOfTheNew_Previews: PreviewProvider {
     static var news = New.examples
 
     static var previews: some View {
-        SelectionCarouselOfTheNew(newsSelection: news, number: 0, width: 350, height: 350)
+        SelectionCarouselOfTheNew(newsSelection: news, index: 0, width: 350, height: 350)
     }
 }

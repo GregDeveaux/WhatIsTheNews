@@ -153,25 +153,4 @@ class HomeViewModel: ObservableObject {
                 print("ERROR: \(error.localizedDescription)")
         }
     }
-
-        //MARK: - display carousel logo/news animated
-
-        /// Description: Allows to animate the carousel of the news
-        /// - Parameter activated: indicate if the moving page is activate
-        /// - Parameter delay: between the display screen
-    func delayPageLogo(if activated: Bool, delay: UInt64) async {
-        var round = 0
-        while activated && round <= 32 {
-            if indexOfThedisplayOfTheNewsSelection <= newsSelectionCarousel.count - 1 {
-                try? await Task.sleep(nanoseconds: delay)
-                indexOfThedisplayOfTheNewsSelection += 1
-                print("new pageIndex: \(indexOfThedisplayOfTheNewsSelection)")
-
-            } else {
-                indexOfThedisplayOfTheNewsSelection = 0
-                print("new pageIndex: \(indexOfThedisplayOfTheNewsSelection)")
-            }
-            round += 1
-        }
-    }
 }

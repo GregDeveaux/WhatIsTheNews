@@ -34,10 +34,13 @@ struct HomeView: View {
 
                     ScrollView {
                         VStack {
-                            CarouselOfNews(isMovingPageSelectionIsActivated: $isMovingPageIsActivated,
-                                           width: screenWidth - 50,
-                                           height: screenWidth - 50)
-                                .environmentObject(viewModel)
+                            CarouselOfNews(
+                                newsSelectionCarousel: $viewModel.newsSelectionCarousel,
+                                isMovingPageSelectionIsActivated: $isMovingPageIsActivated,
+                                width: screenWidth - 50,
+                                height: screenWidth - 50
+                            )
+                            .environmentObject(viewModel)
 
 
                             LineSeparatorNews()
@@ -87,70 +90,6 @@ struct ContentView_Previews: PreviewProvider {
         HomeView()
     }
 }
-
-
-    //MARK: - Views
-
-struct CarouselOfNews: View {
-
-    @EnvironmentObject var viewModel: HomeViewModel
-
-    @Binding var isMovingPageSelectionIsActivated: Bool
-
-    var width: CGFloat
-    var height: CGFloat
-    
-    var body: some View {
-        TabView(selection: $viewModel.indexOfThedisplayOfTheNewsSelection) {
-            Image("Logo_WhatIsTheNews_Alpha")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 400, height: 400)
-                .tag(0)
-
-            if viewModel.newsSelectionCarousel.count > 3 {
-                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
-                             number: 0,
-                             width: width,
-                             height: height)
-                    .environmentObject(viewModel)
-                    .tag(1)
-                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
-                             number: 1,
-                             width: width,
-                             height: height)
-                    .environmentObject(viewModel)
-                    .tag(2)
-                SelectionCarouselOfTheNew(newsSelection: viewModel.newsSelectionCarousel,
-                             number: 2,
-                             width: width,
-                             height: height)
-                    .environmentObject(viewModel)
-                    .tag(3)
-            }
-        }
-        .tabViewStyle(.page)
-        .frame(height: 450)
-        .offset(y: -10)
-        .onAppear {
-            colorDotTabView()
-
-            isMovingPageSelectionIsActivated = true
-            Task {
-                await viewModel.delayPageLogo(if: !isMovingPageSelectionIsActivated,
-                                              delay: 5_000_000_000)
-            }
-        }
-    }
-
-        /// Description: allows to change a color of dot index of TabView
-    func colorDotTabView() {
-        UIPageControl.appearance().currentPageIndicatorTintColor = .green
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.green.withAlphaComponent(0.2)
-    }
-}
-
-
 
 struct ListOfTheNews: View {
 
