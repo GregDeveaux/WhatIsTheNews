@@ -28,21 +28,27 @@ struct CarouselOfNews: View {
                 .tag(0)
 
             if newsSelectionCarousel.count > 3 {
-                SelectionCarouselOfTheNew(newsSelection: newsSelectionCarousel,
-                             index: 0,
-                             width: width,
-                             height: height)
-                    .tag(1)
-                SelectionCarouselOfTheNew(newsSelection: newsSelectionCarousel,
-                             index: 1,
-                             width: width,
-                             height: height)
-                    .tag(2)
-                SelectionCarouselOfTheNew(newsSelection: newsSelectionCarousel,
-                             index: 2,
-                             width: width,
-                             height: height)
-                    .tag(3)
+                SelectionCarouselOfTheNew(
+                    newsSelection: newsSelectionCarousel,
+                    index: 0,
+                    width: width,
+                    height: height
+                )
+                .tag(1)
+                SelectionCarouselOfTheNew(
+                    newsSelection: newsSelectionCarousel,
+                    index: 1,
+                    width: width,
+                    height: height
+                )
+                .tag(2)
+                SelectionCarouselOfTheNew(
+                    newsSelection: newsSelectionCarousel,
+                    index: 2,
+                    width: width,
+                    height: height
+                )
+                .tag(3)
             }
         }
         .tabViewStyle(.page)
@@ -60,7 +66,6 @@ struct CarouselOfNews: View {
             }
         }
     }
-
 }
 
 
@@ -81,7 +86,6 @@ struct CarouselOfNews_Previews: PreviewProvider {
 
 
 extension CarouselOfNews {
-
 
         //MARK: - display the green dots under the frame
 

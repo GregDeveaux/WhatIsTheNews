@@ -86,6 +86,11 @@ struct SelectionCarouselOfTheNew_Previews: PreviewProvider {
     static var news = New.examples
 
     static var previews: some View {
-        SelectionCarouselOfTheNew(newsSelection: news, index: 0, width: 350, height: 350)
+        SelectionCarouselOfTheNew(
+            newsSelection: news,
+            index: 0,
+            width: 350,
+            height: 350
+        )
     }
 }

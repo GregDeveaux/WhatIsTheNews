@@ -27,11 +27,15 @@ struct DetailOfTheNewView: View {
                     .ignoresSafeArea()
 
                 VStack {
-                    AsyncImageDetailNew(new: new, width: widthScreen, height: heightScreen)
-                        .overlay(alignment: .topTrailing) {
-                            SourceName(sourceName: new.source.name)
-                        }
-                        .padding(.bottom, -165)
+                    AsyncImageDetailNew(
+                        new: new,
+                        width: widthScreen,
+                        height: heightScreen
+                    )
+                    .overlay(alignment: .topTrailing) {
+                        SourceName(sourceName: new.source.name)
+                    }
+                    .padding(.bottom, -165)
 
                     VStack {
                         VStack(alignment: .leading) {

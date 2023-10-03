@@ -13,6 +13,7 @@ struct CellOfTheNew: View {
 
     @Environment (\.colorScheme) var colorScheme
 
+
         // MARK: - property
 
     var new: New
@@ -32,9 +33,11 @@ struct CellOfTheNew: View {
 
                 Spacer()
 
-                AsyncImageOfTheNew(new: new,
-                                   width: 100,
-                                   height: 100)
+                AsyncImageOfTheNew(
+                    new: new,
+                    width: 100,
+                    height: 100
+                )
             }
 
             LineSeparatorNews()

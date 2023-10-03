@@ -66,7 +66,6 @@ struct HomeView: View {
                         print("✅3️⃣ HOME_VIEW/ON_APPEAR: call api for the carousel")
                         try await viewModel.getNews(with: "chanson")
                     }
-
                 }
 
                 if viewModel.keyword.isEmpty {
