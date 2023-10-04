@@ -7,17 +7,24 @@
 
 import SwiftUI
 
-    //MARK: - Views
-
 struct CarouselOfNews: View {
 
-    @Binding var newsSelectionCarousel: [New]
+        // MARK: - property wrappers
+
+    @Binding var selectionOfTheNewsOfCarousel: [New]
+
     @State var indexOfThedisplayOfTheNewsSelection: Int = 0
 
-    @Binding var isMovingPageSelectionIsActivated: Bool
+    @Binding var PageMovingIsActivated: Bool
+
+
+        // MARK: - properties
 
     var width: CGFloat
     var height: CGFloat
+
+
+        // MARK: - body
 
     var body: some View {
         TabView(selection: $indexOfThedisplayOfTheNewsSelection) {
@@ -27,23 +34,23 @@ struct CarouselOfNews: View {
                 .frame(width: 400, height: 400)
                 .tag(0)
 
-            if newsSelectionCarousel.count > 3 {
+            if selectionOfTheNewsOfCarousel.count > 3 {
                 SelectionCarouselOfTheNew(
-                    newsSelection: newsSelectionCarousel,
+                    newsSelection: selectionOfTheNewsOfCarousel,
                     index: 0,
                     width: width,
                     height: height
                 )
                 .tag(1)
                 SelectionCarouselOfTheNew(
-                    newsSelection: newsSelectionCarousel,
+                    newsSelection: selectionOfTheNewsOfCarousel,
                     index: 1,
                     width: width,
                     height: height
                 )
                 .tag(2)
                 SelectionCarouselOfTheNew(
-                    newsSelection: newsSelectionCarousel,
+                    newsSelection: selectionOfTheNewsOfCarousel,
                     index: 2,
                     width: width,
                     height: height
@@ -55,13 +62,13 @@ struct CarouselOfNews: View {
         .frame(height: 450)
         .offset(y: -10)
         .onAppear {
-                // Active the dots of tab with a green color
+                /// Active the dots of tab with a green color
             colorDotTabView(color: .green)
-                // Active page switching
-            isMovingPageSelectionIsActivated = true
-                // each 5 secondes, the page changes
+                /// Active page switching
+            PageMovingIsActivated = true
+                /// each 5 secondes, the page changes
             Task {
-                await delayPageLogo(if: isMovingPageSelectionIsActivated,
+                await delayPageLogo(if: PageMovingIsActivated,
                                     delay: 5_000_000_000)
             }
         }
@@ -76,8 +83,8 @@ struct CarouselOfNews_Previews: PreviewProvider {
 
     static var previews: some View {
         CarouselOfNews(
-            newsSelectionCarousel: .constant(news),
-            isMovingPageSelectionIsActivated: .constant(true),
+            selectionOfTheNewsOfCarousel: .constant(news),
+            PageMovingIsActivated: .constant(true),
             width: 350,
             height: 350
         )
@@ -85,9 +92,11 @@ struct CarouselOfNews_Previews: PreviewProvider {
 }
 
 
+    // MARK: - extension
+
 extension CarouselOfNews {
 
-        //MARK: - display the green dots under the frame
+        //MARK: display the green dots under the frame
 
         /// Description: allows to change a color of dot index of TabView
         /// - Parameter color: choose the color of the dots
@@ -97,7 +106,7 @@ extension CarouselOfNews {
     }
 
 
-        //MARK: - display carousel logo/news animated
+        //MARK: display carousel logo/news animated
 
         /// Description: Allows to animate the carousel of the news
         /// - Parameter activated: indicate if the moving page is activate
@@ -105,7 +114,7 @@ extension CarouselOfNews {
     func delayPageLogo(if activated: Bool, delay: UInt64) async {
         var round = 0
         while activated && round <= 32 {
-            if indexOfThedisplayOfTheNewsSelection <= newsSelectionCarousel.count - 1 {
+            if indexOfThedisplayOfTheNewsSelection <= selectionOfTheNewsOfCarousel.count - 1 {
                 try? await Task.sleep(nanoseconds: delay)
                 indexOfThedisplayOfTheNewsSelection += 1
                 print("new pageIndex: \(indexOfThedisplayOfTheNewsSelection)")

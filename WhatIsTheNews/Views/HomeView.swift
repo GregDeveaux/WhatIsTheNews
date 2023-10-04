@@ -15,7 +15,7 @@ struct HomeView: View {
 
     @StateObject var viewModel = HomeViewModel()
 
-    @State private var isMovingPageIsActivated = false
+    @State private var pageMovingIsActivated = false
     @State private var isOpenedSheetToSearchKeyword = false
     @State private var isFirstActivation: Bool = false
 
@@ -35,13 +35,12 @@ struct HomeView: View {
                     ScrollView {
                         VStack {
                             CarouselOfNews(
-                                newsSelectionCarousel: $viewModel.newsSelectionCarousel,
-                                isMovingPageSelectionIsActivated: $isMovingPageIsActivated,
+                                selectionOfTheNewsOfCarousel: $viewModel.newsSelectionOfCarousel,
+                                PageMovingIsActivated: $pageMovingIsActivated,
                                 width: screenWidth - 50,
                                 height: screenWidth - 50
                             )
                             .environmentObject(viewModel)
-
 
                             LineSeparatorNews()
                                 .padding(.bottom, 2)
@@ -60,7 +59,6 @@ struct HomeView: View {
                 print("✅1️⃣ HOME_VIEW/ON_APPEAR: first activation of the app, run carousel")
 
                 if isFirstActivation {
-                    viewModel.thisIsForSelectionCarousel = true
                     print("✅2️⃣ HOME_VIEW/ON_APPEAR: carousel selection is activated")
                     Task(priority: .high) {
                         print("✅3️⃣ HOME_VIEW/ON_APPEAR: call api for the carousel")

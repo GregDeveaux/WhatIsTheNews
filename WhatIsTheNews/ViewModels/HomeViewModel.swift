@@ -11,45 +11,49 @@ class HomeViewModel: ObservableObject {
 
         // MARK: - Property wrappers
 
+        /// Allows to save the selection of the news by search or categories
     @Published var news: [New] = []
 
-    @Published var newsSelectionCarousel: [New] = []
-    @Published var thisIsForSelectionCarousel: Bool = false
-    @Published var carouselIsCompleted: Bool = false
+        /// Allows to save 3 news of carousel predefined theme
+    @Published var newsSelectionOfCarousel: [New] = []
 
-    @Published var indexOfThedisplayOfTheNewsSelection: Int = 0
+    enum StateOfCarousel {
+        case isEmpty
+        case initializationNewsDisplayed
+        case isCompleted
+    }
+    @Published var stateOfCarousel: StateOfCarousel = .isEmpty
+
+    @Published var indexOfThedisplayOfTheCarouselNews: Int = 0
 
     @Published var keyword: String = ""
 
-        // limited to 9
+        // Initial categories, limited to 9
     @Published var categories: [String] = ["Sport", "Cinéma", "Apple", "Gastronomie", "Science", "Histoire", "Spectacle", "Nature", "Cosplay"]
-
-
-        // MARK: - Header Endpoint
-
-    var header: [String: String] {
-        let key = APIKeys.NewsApi.key.rawValue
-        let value = APIKeys.NewsApi.value.rawValue
-        return [key: value]
-    }
 
 
         // MARK: - Get the different News from NewsApi
 
     func getNews(with keyWord: String) async throws {
 
+            // recover the url for the keyword search
         let url = createUrl(to: keyWord)
 
+            // create the request
         var request = URLRequest(url: url)
-            // allows to include the apiKeys in the header
+
+            // include the apiKeys in the header to use API
+        let header: [String: String] = [APIKeys.NewsApi.key.rawValue: APIKeys.NewsApi.value.rawValue]
         request.allHTTPHeaderFields = header
 
+            // retrieve the data and status code of response
         let (data, response) = try await URLSession.shared.data(for: request)
 
         if let httpResponse = response as? HTTPURLResponse {
             switch httpResponse.statusCode {
                 case 200:
                     do {
+                        print(String(describing: ApiError.none.errorDescription))
                         print("✅ HOME_VIEW_MODELS/GET_NEWS: the task received \(String(data: data, encoding: .utf8)!)")
 
                         let decoder = JSONDecoder()
@@ -57,8 +61,8 @@ class HomeViewModel: ObservableObject {
 
                         await saveTheNews(newsData)
 
-                        thisIsForSelectionCarousel = false
                         print("✅4️⃣ HOME_VIEW/GET_NEWS: carousel selection is desactivated")
+
                     }
                     catch let error as DecodingError {
                         print("🛑 HOME_VIEW_MODELS/GET_NEWS: Decoding error: \(String(describing: ApiError.invalidData.errorDescription))")
@@ -121,11 +125,10 @@ class HomeViewModel: ObservableObject {
                           source: result.source,
                           publishedAt: result.publishedAt)
 
-            if thisIsForSelectionCarousel {
-                newsSelectionCarousel.append(new)
-
-                carouselIsCompleted = true
-                print("✅ HOME_VIEW_MODELS/SAVE_THE_NEWS: the Carousel is completed : \(newsSelectionCarousel.count)")
+            if stateOfCarousel == .isEmpty {
+                newsSelectionOfCarousel.append(new)
+                stateOfCarousel = .isCompleted
+                print("✅ HOME_VIEW_MODELS/SAVE_THE_NEWS: the Carousel is completed : \(newsSelectionOfCarousel.count)")
 
             } else {
                 news.append(new)

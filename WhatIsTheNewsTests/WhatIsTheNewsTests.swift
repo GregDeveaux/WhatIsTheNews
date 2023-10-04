@@ -37,10 +37,10 @@ final class WhatIsTheNewsTests: XCTestCase {
     func testDelayPageLogo() async throws {
             // Given
         viewModel = HomeViewModel()
-        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheNewsSelection, 0)
+        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheCarouselNews, 0)
 
-        viewModel?.newsSelectionCarousel = New.examples
-        XCTAssertEqual(viewModel?.newsSelectionCarousel.count, 4)
+        viewModel?.newsSelectionOfCarousel = New.examples
+        XCTAssertEqual(viewModel?.newsSelectionOfCarousel.count, 4)
 
         var isMovingPageSelectionIsActivated: Bool = true
 
@@ -48,7 +48,7 @@ final class WhatIsTheNewsTests: XCTestCase {
         await viewModel?.delayPageLogo(if: isMovingPageSelectionIsActivated, delay: 51_000_000)
 
             // Then
-        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheNewsSelection, 3)
+        XCTAssertEqual(viewModel?.indexOfThedisplayOfTheCarouselNews, 3)
     }
 
     func testPerformanceExample() throws {

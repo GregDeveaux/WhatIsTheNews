@@ -14,7 +14,7 @@ struct SelectionCarouselOfTheNew: View {
     @Environment (\.colorScheme) var colorScheme
 
 
-        // MARK: - property
+        // MARK: - properties
 
     var newsSelection: [New]
     var index: Int
@@ -29,30 +29,40 @@ struct SelectionCarouselOfTheNew: View {
                 // allows create a square image with dot effect
             AsyncImage(url: URL(string: urlToImage)) { phase in
                 if let image = phase.image {
-                        // displays the loaded image
+                        /// displays the loaded image
                     image
                         .resizable()
                         .scaledToFill()
                         .grayscale(1)
                 } else if phase.error != nil {
-                        // displays a subtitute image, if it's a bad url
+                        /// displays a subtitute image, if it's a bad url
                     Image("Logo_WhatIsTheNews-2")
                         .resizable()
                         .grayscale(1)
                 } else {
-                        // displays a wheel of progress while the image isn't loaded
+                        /// displays a wheel of progress while the image isn't loaded
                     ProgressView()
                         .background(Color.gray)
                 }
             }
+                /// mask with gradient opacity for the picture
             .frame(width: width, height: height)
             .clipShape(Rectangle())
             .mask {
-                LinearGradient(gradient: Gradient(colors: [.black, .black, .clear, .clear]),
-                               startPoint: .top,
-                               endPoint: .bottom)
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [
+                            .black,
+                            .black,
+                            .clear,
+                            .clear
+                        ]
+                    ),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
             }
-                // effect image
+                /// effect image
             .blendMode(colorScheme == .light ? .multiply : .exclusion)
             .background {
                 ZStack {
@@ -65,7 +75,7 @@ struct SelectionCarouselOfTheNew: View {
                         .blendMode(.multiply)
                 }
             }
-                // title of the news
+                /// title of the news
             .overlay(alignment: .bottom) {
                 Text(newsSelection[index].title)
                     .padding(.bottom, 17)
